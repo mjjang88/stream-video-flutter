@@ -38,6 +38,8 @@ dependencies:
   stream_video_push_notification: ^0.8.2
   stream_video_screen_sharing: ^0.8.2
 
+  dart_webrtc: 1.4.10
+
 dependency_overrides:
   just_audio_web: ^0.4.13
   wakelock_plus: ^1.2.9
