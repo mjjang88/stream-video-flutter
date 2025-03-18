@@ -18,7 +18,10 @@ command:
 
     # Dependencies used in the project.
     dependencies:
-      dart_webrtc: ^1.4.10
+      dart_webrtc:
+        git:
+          url: https://github.com/StiftTechnologies/dart-webrtc.git
+          ref: 8431d6c54339333f2681c0caaeb875d8c863826c
       device_info_plus: '>=10.1.2 <12.0.0'
       stream_chat_flutter: ^9.6.0
       stream_webrtc_flutter: ^0.12.12+2

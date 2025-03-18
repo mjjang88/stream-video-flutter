@@ -39,6 +39,10 @@ dependency_overrides:
     path: ../../stream_video_flutter
   stream_video_push_notification:
     path: ../../stream_video_push_notification
+  dart_webrtc:
+    git:
+      url: https://github.com/StiftTechnologies/dart-webrtc.git
+      ref: 8431d6c54339333f2681c0caaeb875d8c863826c
 
 dev_dependencies:
   build_runner: ^2.4.6

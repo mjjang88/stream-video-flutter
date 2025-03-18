@@ -15,7 +15,10 @@ dependencies:
   battery_plus: ^6.2.0
   collection: ^1.18.0
   connectivity_plus: ^6.0.4
-  dart_webrtc: ^1.4.10
+  dart_webrtc:
+    git:
+      url: https://github.com/StiftTechnologies/dart-webrtc.git
+      ref: 8431d6c54339333f2681c0caaeb875d8c863826c
   device_info_plus: ">=10.1.2 <12.0.0"
   equatable: ^2.0.5
   fixnum: ^1.1.0
@@ -40,6 +43,12 @@ dependencies:
   web: ^1.0.0
   web_socket_channel: ^3.0.1
   webrtc_interface: ^1.1.1
+
+dependency_overrides:
+  dart_webrtc:
+    git:
+      url: https://github.com/StiftTechnologies/dart-webrtc.git
+      ref: 8431d6c54339333f2681c0caaeb875d8c863826c
 
 dev_dependencies:
   flutter_test:

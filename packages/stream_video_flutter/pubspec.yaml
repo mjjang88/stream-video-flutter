@@ -27,6 +27,12 @@ dependencies:
   stream_webrtc_flutter: ^0.12.12+2
   visibility_detector: ^0.4.0+2
 
+dependency_overrides:
+  dart_webrtc:
+    git:
+      url: https://github.com/StiftTechnologies/dart-webrtc.git
+      ref: 8431d6c54339333f2681c0caaeb875d8c863826c
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

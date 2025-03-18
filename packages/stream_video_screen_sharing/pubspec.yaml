@@ -16,6 +16,12 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.1.8
 
+dependency_overrides:
+  dart_webrtc:
+    git:
+      url: https://github.com/StiftTechnologies/dart-webrtc.git
+      ref: 8431d6c54339333f2681c0caaeb875d8c863826c
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
