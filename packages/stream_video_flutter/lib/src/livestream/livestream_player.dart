@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../stream_video_flutter.dart';
 
@@ -85,7 +86,7 @@ class _LivestreamPlayerState extends State<LivestreamPlayer>
 
   /// Current duration of call.
   final ValueNotifier<Duration> _duration =
-      ValueNotifier<Duration>(Duration.zero);
+  ValueNotifier<Duration>(Duration.zero);
 
   @override
   void initState() {
@@ -234,6 +235,16 @@ class _LivestreamPlayerState extends State<LivestreamPlayer>
                           setState(() {
                             _fullscreen = !_fullscreen;
                           });
+                          if (_fullscreen) {
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.landscapeLeft,
+                              DeviceOrientation.landscapeRight,
+                            ]);
+                          } else {
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                            ]);
+                          }
                         },
                         duration: duration,
                         showParticipantCount: widget.showParticipantCount,
