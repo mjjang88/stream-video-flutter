@@ -116,7 +116,7 @@ class LivestreamInfo extends StatelessWidget {
                       width: 8,
                     ),
                     Text(
-                      callState.otherParticipants.length.toString(),
+                      callState.anonymousParticipantCount.toString(),
                       style: theme.participantCountTextStyle,
                     ),
                   ],
