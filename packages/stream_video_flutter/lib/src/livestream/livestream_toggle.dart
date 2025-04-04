@@ -47,6 +47,7 @@ class LivestreamToggle extends StatelessWidget {
             child: Icon(
               Icons.pause_rounded,
               size: theme.playPauseIconSize,
+              color: const Color(0xFFE2E2E2),
             ),
           ),
           secondChild: IconTheme(
@@ -54,6 +55,7 @@ class LivestreamToggle extends StatelessWidget {
             child: Icon(
               Icons.play_arrow_rounded,
               size: theme.playPauseIconSize,
+              color: const Color(0xFFE2E2E2),
             ),
           ),
           crossFadeState:
