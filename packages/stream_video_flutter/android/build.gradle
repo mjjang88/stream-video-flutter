@@ -46,9 +46,16 @@ android {
         implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
         implementation "io.github.crow-misia.libyuv:libyuv-android:0.34.0"
         implementation "androidx.annotation:annotation:1.8.0"
-        implementation 'com.google.mlkit:segmentation-selfie:16.0.0-beta5'
-        implementation "com.github.android:renderscript-intrinsics-replacement-toolkit:344be3f"
+        //implementation 'com.google.mlkit:segmentation-selfie:16.0.0-beta5'
+        //implementation "com.github.android:renderscript-intrinsics-replacement-toolkit:344be3f"
         implementation 'io.getstream:stream-webrtc-android:1.3.8'
+    }
+
+    // 안전을 위해 "분할" 아티팩트를 완전히 제외(다른 종속성에서 끌어오지 않도록 하기 위함)
+    configurations.all {
+        // :흰색_확인_표시: 혹시 모를 전이 의존성도 차단
+        exclude group: "com.google.mlkit", module: "segmentation-selfie"
+        exclude group: "com.github.android", module: "renderscript-intrinsics-replacement-toolkit"
     }
 
     testOptions {
