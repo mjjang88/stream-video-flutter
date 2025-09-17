@@ -2,77 +2,72 @@ plugins {
     id "com.android.library"
     id "kotlin-android"
 }
-
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
 }
-
 android {
+    // :흰색_확인_표시: 네임스페이스는 플러터/AGP 버전에 따라 존재할 수 있음. 있으면 설정, 없으면 무시.
     if (project.android.hasProperty("namespace")) {
         namespace 'io.getstream.video.flutter.stream_video_flutter'
     }
-
+    // :흰색_확인_표시: SDK/툴체인 정렬: 앱과 충돌 없도록 34 사용 (앱 모듈의 AGP/SDK와 호환)
     compileSdkVersion 34
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-
     kotlinOptions {
         jvmTarget = '17'
     }
-
+    // :흰색_확인_표시: 원본 소스 전체를 포함 (특정 파일 제외하지 않음). no-op 구현으로 대체할 것이므로 필터 제외 불필요.
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
-        // :출입금지:️ 해당 내용 추가
-        main {
-            java {
-                exclude 'io/getstream/video/flutter/stream_video_flutter/videoFilters/factories/VirtualBackgroundFactory.kt'
-            }
-        }
     }
-
     defaultConfig {
+        // :흰색_확인_표시: 최소 SDK는 원래 값 유지. (플러그인 호환)
         minSdkVersion 19
     }
-
-    dependencies {
-        testImplementation 'org.jetbrains.kotlin:kotlin-test'
-        testImplementation 'org.mockito:mockito-core:5.0.0'
-        implementation 'io.getstream:stream-log:1.1.3'
-        implementation 'com.squareup.picasso:picasso:2.71828'
-        implementation 'androidx.core:core:1.3.0'
-        implementation 'androidx.media:media:1.1.0'
-        implementation 'androidx.appcompat:appcompat:1.1.0'
-        implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
-        implementation "io.github.crow-misia.libyuv:libyuv-android:0.41.0"
-        implementation "androidx.annotation:annotation:1.8.0"
-        //implementation 'com.google.mlkit:segmentation-selfie:16.0.0-beta5'
-        //implementation "com.github.android:renderscript-intrinsics-replacement-toolkit:344be3f"
-        implementation 'io.getstream:stream-webrtc-android:1.3.8'
-    }
-
-    // 안전을 위해 "분할" 아티팩트를 완전히 제외(다른 종속성에서 끌어오지 않도록 하기 위함)
-    configurations.all {
-        // :흰색_확인_표시: 혹시 모를 전이 의존성도 차단
-        exclude group: "com.google.mlkit", module: "segmentation-selfie"
-        exclude group: "com.github.android", module: "renderscript-intrinsics-replacement-toolkit"
-    }
-
     testOptions {
         unitTests.all {
             useJUnitPlatform()
-
             testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
             }
         }
     }
+}
+/**
+ * :흰색_확인_표시: 최상위에서 전이 의존성 차단:
+ *   - ML Kit 세그멘테이션과 RenderScript 대체 라이브러리(google, jitpack)를 전부 배제
+ *   - 이렇게 해야 어떤 의존성에서 끌어와도 빌드에 포함되지 않음
+ */
+configurations.all {
+    exclude group: "com.google.mlkit",    module: "segmentation-selfie"
+    exclude group: "com.google.android",  module: "renderscript-toolkit"
+    exclude group: "com.google.android",  module: "renderscript-intrinsics-replacement-toolkit"
+    exclude group: "com.github.android",  module: "renderscript-toolkit"
+    exclude group: "com.github.android",  module: "renderscript-intrinsics-replacement-toolkit"
+}
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.mockito:mockito-core:5.0.0'
+    implementation 'io.getstream:stream-log:1.1.3'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.core:core:1.3.0'
+    implementation 'androidx.media:media:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
+    // :흰색_확인_표시: 앱과 동일 세대 사용: 네이티브 정렬 이슈 없는 libyuv (ML/RS 없음)
+    implementation "io.github.crow-misia.libyuv:libyuv-android:0.41.0"
+    implementation "androidx.annotation:annotation:1.8.0"
+    // :출입금지:️ 절대 추가하지 말 것 (위에서 exclude로도 차단됨)
+    // implementation 'com.google.mlkit:segmentation-selfie:16.0.0-beta5'
+    // implementation "com.github.android:renderscript-intrinsics-replacement-toolkit:344be3f"
+    implementation 'io.getstream:stream-webrtc-android:1.3.8'
 }
